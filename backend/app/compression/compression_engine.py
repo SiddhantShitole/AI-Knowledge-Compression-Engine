@@ -1,8 +1,12 @@
-def compress_graph(graph, max_nodes=5):
+def compress_graph(graph, time_available):
 
     nodes = list(graph.nodes)
 
-    if len(nodes) > max_nodes:
-        nodes = nodes[:max_nodes]
+    # assume each concept takes 1 hour
+    concept_time = 1
 
-    return nodes
+    max_concepts = max(1, time_available // concept_time)
+
+    optimized_path = nodes[:max_concepts]
+
+    return optimized_path

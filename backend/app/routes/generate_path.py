@@ -9,17 +9,19 @@ router = APIRouter()
 
 class TopicRequest(BaseModel):
     topic: str
+    time_available: int
 
 
 @router.post("/generate-path")
 def generate_path(request: TopicRequest):
 
     topic = request.topic
+    time_available = request.time_available
 
     concepts = extract_concepts(topic)
 
     graph = build_graph(concepts)
 
-    path = compress_graph(graph)
+    path = compress_graph(graph, time_available)
 
     return {"learning_path": path}
