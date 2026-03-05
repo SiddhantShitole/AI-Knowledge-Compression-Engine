@@ -3,4 +3,5 @@ uvicorn
 openai
 networkx
 pymongo
+
 python-dotenv
