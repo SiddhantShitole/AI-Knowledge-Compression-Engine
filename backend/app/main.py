@@ -1,6 +1,5 @@
 from fastapi import FastAPI
-from routes import generate_path, lesson, quiz
-
+from app.routes import generate_path, lesson, quiz
 app = FastAPI()
 
 app.include_router(generate_path.router)
