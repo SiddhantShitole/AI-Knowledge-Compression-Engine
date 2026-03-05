@@ -3,16 +3,22 @@ export default function LessonViewer({ lesson }) {
   if(!lesson) return null;
 
   return (
-    <div>
+
+    <div style={{marginTop:"30px"}}>
 
       <h2>{lesson.concept}</h2>
 
       <p>{lesson.explanation}</p>
 
-      <p><b>Example:</b> {lesson.example}</p>
+      <p>
+        <b>Example:</b> {lesson.example}
+      </p>
 
-      <p><b>Quiz:</b> {lesson.quiz.question}</p>
+      <p>
+        <b>Quiz:</b> {lesson.quiz.question}
+      </p>
 
     </div>
+
   );
 }

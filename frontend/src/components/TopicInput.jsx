@@ -10,14 +10,13 @@ export default function TopicInput({ setPath }) {
 
     const res = await API.post("/generate-path", {
       topic: topic,
-      time_available: time
+      time_available: parseInt(time)
     });
 
     setPath(res.data.learning_path);
   };
 
   return (
-
     <div>
 
       <h2>Enter Topic</h2>
@@ -28,7 +27,7 @@ export default function TopicInput({ setPath }) {
         placeholder="Learn VLSI"
       />
 
-      <h3>Available Learning Time (hours)</h3>
+      <h3>Learning Time (hours)</h3>
 
       <input
         type="number"
@@ -36,11 +35,12 @@ export default function TopicInput({ setPath }) {
         onChange={(e)=>setTime(e.target.value)}
       />
 
+      <br /><br />
+
       <button onClick={generatePath}>
         Generate Learning Path
       </button>
 
     </div>
-
   );
 }
