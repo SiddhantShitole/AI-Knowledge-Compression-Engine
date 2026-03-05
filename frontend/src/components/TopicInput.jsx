@@ -1,46 +1,34 @@
 import { useState } from "react";
-import API from "../api/api";
+import { generatePath } from "../api/api";
 
-export default function TopicInput({ setPath }) {
+function TopicInput({ setPath }) {
 
   const [topic, setTopic] = useState("");
-  const [time, setTime] = useState(5);
 
-  const generatePath = async () => {
+  const handleSubmit = async () => {
+    const data = await generatePath(topic);
 
-    const res = await API.post("/generate-path", {
-      topic: topic,
-      time_available: parseInt(time)
-    });
+    console.log(data);
 
-    setPath(res.data.learning_path);
+    setPath(data.concepts); // IMPORTANT
   };
 
   return (
     <div>
 
-      <h2>Enter Topic</h2>
-
       <input
+        type="text"
+        placeholder="Enter topic"
         value={topic}
-        onChange={(e)=>setTopic(e.target.value)}
-        placeholder="Learn VLSI"
+        onChange={(e) => setTopic(e.target.value)}
       />
 
-      <h3>Learning Time (hours)</h3>
-
-      <input
-        type="number"
-        value={time}
-        onChange={(e)=>setTime(e.target.value)}
-      />
-
-      <br /><br />
-
-      <button onClick={generatePath}>
-        Generate Learning Path
+      <button onClick={handleSubmit}>
+        Generate Path
       </button>
 
     </div>
   );
 }
+
+export default TopicInput;

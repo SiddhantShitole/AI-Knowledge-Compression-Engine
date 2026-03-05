@@ -2,7 +2,7 @@ import { useState } from "react";
 import TopicInput from "./components/TopicInput";
 import LessonViewer from "./components/LessonViewer";
 import ConceptGraph from "./components/ConceptGraph";
-import API from "./api/api";
+import { getLesson } from "./api/api";
 
 function App() {
 
@@ -10,8 +10,8 @@ function App() {
   const [lesson, setLesson] = useState(null);
 
   const openLesson = async (concept) => {
-    const res = await API.get(`/lesson/${concept}`);
-    setLesson(res.data.lesson);
+    const data = await getLesson(concept);
+    setLesson(data.lesson);
   };
 
   return (

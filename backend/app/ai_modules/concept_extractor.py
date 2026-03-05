@@ -1,6 +1,6 @@
 def extract_concepts(topic: str):
 
-    concepts = [
+    return [
         f"{topic} Fundamentals",
         f"{topic} Architecture",
         f"{topic} Design Principles",
@@ -8,5 +8,3 @@ def extract_concepts(topic: str):
         f"{topic} Optimization",
         f"{topic} Applications"
     ]
-
-    return concepts
