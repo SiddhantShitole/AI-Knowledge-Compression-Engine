@@ -2,9 +2,12 @@ import networkx as nx
 
 def build_graph(concepts):
 
-    graph = nx.DiGraph()
+    G = nx.DiGraph()
+
+    for concept in concepts:
+        G.add_node(concept)
 
     for i in range(len(concepts) - 1):
-        graph.add_edge(concepts[i], concepts[i+1])
+        G.add_edge(concepts[i], concepts[i+1])
 
-    return graph
+    return G

@@ -1,11 +1,12 @@
 def extract_concepts(topic: str):
 
     concepts = [
-        f"Introduction to {topic}",
-        f"Basic Principles of {topic}",
-        f"Core Components of {topic}",
-        f"Working of {topic}",
-        f"Applications of {topic}"
+        f"{topic} Fundamentals",
+        f"{topic} Architecture",
+        f"{topic} Design Principles",
+        f"{topic} Implementation",
+        f"{topic} Optimization",
+        f"{topic} Applications"
     ]
 
     return concepts

@@ -2,17 +2,17 @@ def generate_lesson(concept: str):
 
     lesson = {
         "concept": concept,
-        "explanation": f"{concept} is an important topic that helps understand the fundamentals of the subject.",
-        "example": f"A simple example of {concept} helps illustrate how it works in real systems.",
+        "explanation": f"{concept} explains an important principle required to understand the subject.",
+        "example": f"A practical example of {concept} can be seen in real engineering systems.",
         "quiz": {
-            "question": f"What best describes {concept}?",
+            "question": f"What is the main purpose of {concept}?",
             "options": [
-                "A core concept in the subject",
-                "An unrelated topic",
-                "A hardware component",
-                "A programming language"
+                "Understanding system design",
+                "Random topic",
+                "Hardware failure",
+                "Programming syntax"
             ],
-            "answer": "A core concept in the subject"
+            "answer": "Understanding system design"
         }
     }
 
