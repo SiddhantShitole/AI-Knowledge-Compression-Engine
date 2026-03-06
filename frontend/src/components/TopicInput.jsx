@@ -10,7 +10,7 @@ function TopicInput({ setPath }) {
 
     console.log(data);
 
-    setPath(data.concepts); // IMPORTANT
+    setPath(data.graph); // IMPORTANT
   };
 
   return (

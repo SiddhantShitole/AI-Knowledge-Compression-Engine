@@ -1,32 +1,29 @@
-import ReactFlow from "reactflow";
+import ReactFlow, { Controls, Background } from "reactflow";
 import "reactflow/dist/style.css";
+const nodeTypes = {};
 
-export default function ConceptGraph({ path, openLesson }) {
+function ConceptGraph({ path }) {
 
   const nodes = path.map((concept, index) => ({
-    id: index.toString(),
-    data: { label: concept },
-    position: { x: index * 200, y: 100 }
-  }));
+  id: index.toString(),
+  data: { label: concept },
+  position: { x: index * 250, y: 100 }
+}));
 
-  const edges = path.slice(0, -1).map((_, index) => ({
-    id: `e${index}`,
-    source: index.toString(),
-    target: (index + 1).toString()
-  }));
-
-  const onNodeClick = (_, node) => {
-    openLesson(node.data.label);
-  };
-
+  const edges = path.slice(1).map((_, index) => ({
+  id: `e${index}`,
+  source: index.toString(),
+  target: (index + 1).toString(),
+  animated: true
+}));
   return (
-    <div style={{ height: 300 }}>
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodeClick={onNodeClick}
-        fitView
-      />
+    <div style={{ width: "100%", height: "80vh" }}>
+      <ReactFlow nodes={nodes} edges={edges}>
+  <Controls />
+  <Background />
+</ReactFlow>
     </div>
   );
 }
+
+export default ConceptGraph;
