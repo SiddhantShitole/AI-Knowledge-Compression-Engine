@@ -40,23 +40,31 @@ Physical Layout
 
     return concepts
 
-
 def generate_lesson(concept):
 
     prompt = f"""
-Explain the concept {concept} in a short compressed format.
+Explain the concept {concept}.
 
-Structure:
-Key Idea
-Explanation
-Example
+Return JSON in this format:
+
+{{
+ "concept": "",
+ "explanation": "",
+ "example": "",
+ "quiz": {{
+   "question": ""
+ }}
+}}
 """
 
     response = client.chat.completions.create(
         model="llama-3.1-8b-instant",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.3,
-        max_tokens=300
+        max_tokens=400
     )
 
-    return response.choices[0].message.content
+    import json
+    text = response.choices[0].message.content
+
+    return json.loads(text)
