@@ -1,7 +1,5 @@
 fastapi
 uvicorn
-openai
-networkx
-pymongo
-
 python-dotenv
+groq
+pydantic
