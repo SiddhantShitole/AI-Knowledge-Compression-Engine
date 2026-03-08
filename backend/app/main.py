@@ -3,11 +3,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.ai_modules.llm_engine import extract_concepts, generate_lesson, generate_quiz
 
 app = FastAPI()
+origins = [
+    "http://localhost:5173",
+    "https://ai-knowledge-compression-vercel.vercel.app"
+]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],   # allow all for now
-    allow_credentials=False,
+    allow_origins=origins,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -31,8 +35,17 @@ async def lesson(concept: str):
 
     return {"lesson": lesson}
 @app.get("/quiz/{concept}")
-async def quiz(concept: str):
+def get_quiz(concept: str):
 
-    quiz = generate_quiz(concept)
+    try:
+        quiz = generate_quiz(concept)
 
-    return quiz
+        return {
+            "concept": concept,
+            "questions": quiz
+        }
+
+    except Exception as e:
+        return {
+            "error": str(e)
+        }
