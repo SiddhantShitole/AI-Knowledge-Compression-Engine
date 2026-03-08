@@ -46,17 +46,15 @@ Physical Layout
 def generate_lesson(concept):
 
     prompt = f"""
-Explain the concept: {concept}
+Explain the concept **{concept}** in a concise educational way.
 
-Return STRICT JSON only.
+Structure:
+1. Definition
+2. Key idea
+3. Example
+4. Why it matters
 
-Format:
-
-{{
- "concept": "{concept}",
- "explanation": "2-3 sentence explanation",
- "example": "simple real world example"
-}}
+Topic: {concept}
 """
 
     response = client.chat.completions.create(
@@ -86,38 +84,32 @@ Format:
 def generate_quiz(concept):
 
     prompt = f"""
-Create 10 multiple choice questions about {concept}.
+Create a 3-question multiple choice quiz about the concept: {concept}.
 
-Return STRICT JSON.
-
-Format:
+Rules:
+- Questions must strictly relate to {concept}.
+- Avoid programming language questions unless the concept itself is about programming.
+- Each question must have 4 options.
+- Return JSON in this format:
 
 {{
- "questions":[
-   {{
-     "question":"text",
-     "options":["A","B","C","D"],
-     "correct":1
-   }}
- ]
+  "questions":[
+    {{
+      "question":"...",
+      "options":["A","B","C","D"],
+      "correct":0
+    }}
+  ]
 }}
 """
 
     response = client.chat.completions.create(
-        model="llama-3.1-8b-instant",
-        messages=[{"role":"user","content":prompt}],
-        temperature=0.4,
-        max_tokens=800
+        model="llama3-70b-8192",
+        messages=[
+            {"role": "system", "content": "You are an educational AI that generates quizzes about the given concept."},
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.2
     )
 
-    text = response.choices[0].message.content
-
-    match = re.search(r'\{[\s\S]*\}', text)
-
-    if match:
-        try:
-            return json.loads(match.group())
-        except:
-            pass
-
-    return {"questions":[]}
+    return json.loads(response.choices[0].message.content)
