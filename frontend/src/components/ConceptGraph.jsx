@@ -27,11 +27,11 @@ const nodeTypes = {
 function ConceptGraph({ path, openLesson }) {
 
   const nodes = path.map((concept, index) => ({
-    id: index.toString(),
-    type: "card",
-    data: { label: concept },
-    position: { x: index * 260, y: 120 }
-  }));
+  id: index.toString(),
+  type: "card",
+  data: { label: concept },
+  position: { x: 200, y: index * 120 }
+}));
 
   const edges = path.slice(1).map((_, index) => ({
     id: `e${index}`,

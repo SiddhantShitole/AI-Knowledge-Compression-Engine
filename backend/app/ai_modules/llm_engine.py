@@ -1,4 +1,6 @@
 import os
+import json
+import re
 from groq import Groq
 from dotenv import load_dotenv
 
@@ -40,20 +42,20 @@ Physical Layout
 
     return concepts
 
+
 def generate_lesson(concept):
 
     prompt = f"""
-Explain the concept {concept}.
+Explain the concept: {concept}
 
-Return JSON in this format:
+Return STRICT JSON only.
+
+Format:
 
 {{
- "concept": "",
- "explanation": "",
- "example": "",
- "quiz": {{
-   "question": ""
- }}
+ "concept": "{concept}",
+ "explanation": "2-3 sentence explanation",
+ "example": "simple real world example"
 }}
 """
 
@@ -61,10 +63,59 @@ Return JSON in this format:
         model="llama-3.1-8b-instant",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.3,
-        max_tokens=400
+        max_tokens=300
     )
 
-    import json
     text = response.choices[0].message.content
 
-    return json.loads(text)
+    match = re.search(r'\{[\s\S]*\}', text)
+
+    if match:
+        try:
+            return json.loads(match.group())
+        except json.JSONDecodeError:
+            pass
+
+    return {
+        "concept": concept,
+        "explanation": text,
+        "example": ""
+    }
+
+
+def generate_quiz(concept):
+
+    prompt = f"""
+Create 10–15 conceptual quiz questions about {concept}.
+
+Return STRICT JSON.
+
+Format:
+
+{{
+ "questions": [
+   "question1",
+   "question2",
+   "question3"
+ ]
+}}
+"""
+
+    response = client.chat.completions.create(
+        model="llama-3.1-8b-instant",
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0.4,
+        max_tokens=500
+    )
+
+    text = response.choices[0].message.content
+
+    match = re.search(r'\{[\s\S]*\}', text)
+
+    if match:
+        try:
+            return json.loads(match.group())
+        except json.JSONDecodeError:
+            pass
+
+    return {"questions": [text]}

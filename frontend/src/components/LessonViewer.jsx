@@ -1,4 +1,4 @@
-export default function LessonViewer({ lesson }) {
+export default function LessonViewer({ lesson, onQuiz }) {
 
   if (!lesson) return null;
 
@@ -15,11 +15,9 @@ export default function LessonViewer({ lesson }) {
         </p>
       )}
 
-      {lesson.quiz && (
-        <p>
-          <b>Quiz:</b> {lesson.quiz.question}
-        </p>
-      )}
+      <button onClick={() => onQuiz(lesson.concept)}>
+        Take Quiz
+      </button>
 
     </div>
   );
