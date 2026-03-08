@@ -21,16 +21,18 @@ function App() {
   };
 
   const openLesson = async (concept) => {
+  setQuiz(null);
+  const res = await fetch(
+    `http://127.0.0.1:8000/lesson/${encodeURIComponent(concept)}`
+  );
 
-    const res = await fetch(
-      `http://127.0.0.1:8000/lesson/${encodeURIComponent(concept)}`
-    );
+  const data = await res.json();
 
-    const data = await res.json();
+  console.log("Lesson:", data);
 
-    setLesson(data);   // FIXED
-  };
-
+  setLesson(data);
+  setQuiz(null);
+};
   return (
     <div style={{
       display: "flex",
@@ -80,16 +82,16 @@ function App() {
 
                 <p><b>{i + 1}. {q.question}</b></p>
 
-                {q.options && q.options.map((opt, idx) => (
-                  <div key={idx}>
-                    <input
-                      type="radio"
-                      name={`q${i}`}
-                      value={idx + 1}
-                    />
-                    {opt}
-                  </div>
-                ))}
+                {q.options.map((opt, idx) => (
+  <label key={idx} style={{display:"block"}}>
+    <input
+      type="radio"
+      name={`q${i}`}
+      value={idx}
+    />
+    {opt}
+  </label>
+))}
 
               </div>
             ))}

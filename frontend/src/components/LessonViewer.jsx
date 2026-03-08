@@ -1,29 +1,31 @@
 export default function LessonViewer({ lesson, onQuiz }) {
 
-  if (!lesson) {
+  if (!lesson || !lesson.lesson) {
     return (
-      <div style={{color:"#777"}}>
+      <div style={{ color: "#777" }}>
         <h3>Select a concept from the graph</h3>
         <p>Click any node on the left to view its lesson.</p>
       </div>
     );
   }
 
+  const data = lesson.lesson;
+
   return (
     <div>
 
-      <h2>{lesson.concept}</h2>
+      <h2>{data.title}</h2>
 
-      <p>{lesson.explanation}</p>
+      <p>{data.explanation}</p>
 
-      {lesson.example && (
+      {data.example && (
         <p>
-          <b>Example:</b> {lesson.example}
+          <b>Example:</b> {data.example}
         </p>
       )}
 
       <button
-        onClick={() => onQuiz(lesson.concept)}
+        onClick={() => onQuiz(data.title)}
         style={{
           marginTop: "20px",
           padding: "10px 20px",

@@ -1,4 +1,5 @@
 import ReactFlow, { Background } from "reactflow";
+import { Handle, Position } from "reactflow";
 import "reactflow/dist/style.css";
 
 const CardNode = ({ data }) => {
@@ -15,31 +16,42 @@ const CardNode = ({ data }) => {
         fontWeight: "500"
       }}
     >
+      <Handle type="target" position={Position.Top} />
+      
       {data.label}
+
+      <Handle type="source" position={Position.Bottom} />
     </div>
   );
 };
-
 const nodeTypes = {
   card: CardNode
 };
 
 function ConceptGraph({ path, openLesson }) {
 
-  const nodes = path.map((concept, index) => ({
-  id: index.toString(),
-  type: "card",
-  data: { label: concept },
-  position: { x: 200, y: index * 120 }
-}));
+  if (!path || path.length === 0) return null;
 
-  const edges = path.slice(1).map((_, index) => ({
-    id: `e${index}`,
-    source: index.toString(),
-    target: (index + 1).toString(),
-    animated: true,
-    style: { stroke: "#6366f1", strokeWidth: 2 }
+  // create nodes
+  const nodes = path.map((concept, index) => ({
+    id: `${index}`,
+    type: "card",
+    data: { label: concept },
+    position: { x: 200, y: index * 120 }
   }));
+
+  // create edges safely
+  const edges = [];
+
+  for (let i = 0; i < path.length - 1; i++) {
+    edges.push({
+      id: `e${i}`,
+      source: `${i}`,
+      target: `${i + 1}`,
+      animated: true,
+      style: { stroke: "#6366f1", strokeWidth: 2 }
+    });
+  }
 
   return (
     <div style={{ width: "100%", height: "80vh" }}>
@@ -47,7 +59,10 @@ function ConceptGraph({ path, openLesson }) {
         nodes={nodes}
         edges={edges}
         nodeTypes={nodeTypes}
-        onNodeClick={(event, node) => openLesson(node.data.label)}
+        onNodeClick={(event, node) => {
+          console.log("Clicked:", node.data.label);
+          openLesson(node.data.label);
+        }}
         fitView
         zoomOnScroll={false}
         zoomOnPinch={false}

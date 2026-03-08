@@ -86,26 +86,28 @@ Format:
 def generate_quiz(concept):
 
     prompt = f"""
-Create 10–15 conceptual quiz questions about {concept}.
+Create 10 multiple choice questions about {concept}.
 
 Return STRICT JSON.
 
 Format:
 
 {{
- "questions": [
-   "question1",
-   "question2",
-   "question3"
+ "questions":[
+   {{
+     "question":"text",
+     "options":["A","B","C","D"],
+     "correct":1
+   }}
  ]
 }}
 """
 
     response = client.chat.completions.create(
         model="llama-3.1-8b-instant",
-        messages=[{"role": "user", "content": prompt}],
+        messages=[{"role":"user","content":prompt}],
         temperature=0.4,
-        max_tokens=500
+        max_tokens=800
     )
 
     text = response.choices[0].message.content
@@ -115,7 +117,7 @@ Format:
     if match:
         try:
             return json.loads(match.group())
-        except json.JSONDecodeError:
+        except:
             pass
 
-    return {"questions": [text]}
+    return {"questions":[]}
