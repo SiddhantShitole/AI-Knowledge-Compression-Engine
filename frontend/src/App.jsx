@@ -8,7 +8,8 @@ function App() {
   const [path, setPath] = useState([]);
   const [lesson, setLesson] = useState(null);
   const [quiz, setQuiz] = useState(null);
-
+  const [answers, setAnswers] = useState({});
+  const [score, setScore] = useState(null);
   const openQuiz = async (concept) => {
 
     const res = await fetch(
@@ -32,6 +33,19 @@ function App() {
 
   setLesson(data);
   setQuiz(null);
+};
+const checkAnswers = () => {
+console.log("Selected:", answers);
+console.log("Correct:", quiz.questions);
+  let correct = 0;
+
+  quiz.questions.forEach((q, index) => {
+    if (answers[index] === q.correct) {
+      correct++;
+    }
+  });
+
+  setScore(correct);
 };
   return (
     <div style={{
@@ -85,10 +99,16 @@ function App() {
                 {q.options.map((opt, idx) => (
   <label key={idx} style={{display:"block"}}>
     <input
-      type="radio"
-      name={`q${i}`}
-      value={idx}
-    />
+  type="radio"
+  name={`q${i}`}
+  value={idx}
+  onChange={(e) =>
+  setAnswers((prev) => ({
+    ...prev,
+    [i]: Number(e.target.value)
+  }))
+}
+/>
     {opt}
   </label>
 ))}
@@ -97,17 +117,25 @@ function App() {
             ))}
 
             {/* CHECK ANSWERS BUTTON */}
-            <button style={{
-              marginTop: "20px",
-              padding: "10px 20px",
-              background: "#4f46e5",
-              color: "white",
-              border: "none",
-              borderRadius: "6px",
-              cursor: "pointer"
-            }}>
-              Check Answers
-            </button>
+            <button
+  onClick={checkAnswers}
+  style={{
+    marginTop: "20px",
+    padding: "10px 20px",
+    background: "#4f46e5",
+    color: "white",
+    border: "none",
+    borderRadius: "6px",
+    cursor: "pointer"
+  }}
+>
+  Check Answers
+</button>
+{score !== null && (
+  <h3 style={{ marginTop: "15px" }}>
+    Score: {score} / {quiz.questions.length}
+  </h3>
+)}
 
           </div>
         )}
