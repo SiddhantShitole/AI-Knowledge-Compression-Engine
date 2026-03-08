@@ -12,4 +12,4 @@ export const generatePath = async (topic) => {
 export const getLesson = async (concept) => {
   const res = await API.get(`/lesson/${encodeURIComponent(concept)}`);
   return res.data;
-};
+}; 

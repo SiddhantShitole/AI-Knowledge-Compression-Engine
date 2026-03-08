@@ -15,15 +15,18 @@ function App() {
 
   const openQuiz = async (concept) => {
 
-    const res = await fetch(
-      `${API}/quiz/${encodeURIComponent(concept)}`
-    );
+  if (!concept) {
+    console.error("Quiz concept missing");
+    return;
+  }
 
-    const data = await res.json();
+  const res = await fetch(
+    `${API}/quiz/${encodeURIComponent(concept)}`
+  );
 
-    setQuiz(data);
-  };
-
+  const data = await res.json();
+  setQuiz(data);
+};
   const openLesson = async (concept) => {
 
     setQuiz(null);
