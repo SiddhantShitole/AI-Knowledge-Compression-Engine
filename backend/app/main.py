@@ -4,8 +4,7 @@ from app.ai_modules.llm_engine import extract_concepts, generate_lesson
 from app.ai_modules.llm_engine import generate_quiz
 app = FastAPI()
 
-origins = ["http://localhost:5173"]
-
+origins = ["*"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
