@@ -48,20 +48,29 @@ console.log("Correct:", quiz.questions);
   setScore(correct);
 };
   return (
-    <div style={{
-      display: "flex",
-      height: "100vh",
-      fontFamily: "Arial"
-    }}>
+    <div
+  style={{
+    display: "flex",
+    height: "100vh",
+    background: "#000000",
+    color: "#e2e8f0",
+    fontFamily: "Inter, sans-serif"
+  }}
+>
 
       {/* LEFT SIDE GRAPH */}
-      <div style={{
-        flex: 1,
-        borderRight: "1px solid #ddd",
-        padding: "20px"
-      }}>
+      <div
+  style={{
+    flex: 1,
+    borderRight: "1px solid #1e293b",
+    padding: "25px",
+    background: "#020617"
+  }}
+>
 
-        <h2>Learning Graph</h2>
+        <h2 style={{ marginBottom: "20px", color: "#60a5fa" }}>
+  Learning Graph
+</h2>
 
         <TopicInput setPath={setPath} />
 
@@ -72,11 +81,14 @@ console.log("Correct:", quiz.questions);
       </div>
 
       {/* RIGHT SIDE LESSON PANEL */}
-      <div style={{
-        flex: 1,
-        padding: "30px",
-        overflowY: "auto"
-      }}>
+      <div
+  style={{
+    flex: 1,
+    padding: "35px",
+    overflowY: "auto",
+    background: "#020617"
+  }}
+>
 
         <LessonViewer lesson={lesson} onQuiz={openQuiz} />
 
@@ -91,13 +103,23 @@ console.log("Correct:", quiz.questions);
                 padding: "15px",
                 border: "1px solid #ddd",
                 borderRadius: "8px",
-                background: "#f9f9f9"
+                background: "#111827"
               }}>
 
-                <p><b>{i + 1}. {q.question}</b></p>
+                <p style={{ color: "#e2e8f0", fontWeight: "500" }}>
+  {i + 1}. {q.question}
+</p>
 
                 {q.options.map((opt, idx) => (
-  <label key={idx} style={{display:"block"}}>
+  <label
+  key={idx}
+  style={{
+    display: "block",
+    padding: "6px 0",
+    cursor: "pointer",
+    color: "#cbd5f5"
+  }}
+>
     <input
   type="radio"
   name={`q${i}`}
@@ -120,23 +142,33 @@ console.log("Correct:", quiz.questions);
             <button
   onClick={checkAnswers}
   style={{
-    marginTop: "20px",
-    padding: "10px 20px",
-    background: "#4f46e5",
-    color: "white",
-    border: "none",
-    borderRadius: "6px",
-    cursor: "pointer"
-  }}
+  marginTop: "25px",
+  padding: "12px 22px",
+  background: "linear-gradient(135deg,#22c55e,#16a34a)",
+  border: "none",
+  borderRadius: "8px",
+  color: "white",
+  fontWeight: "500",
+  cursor: "pointer"
+}}
 >
   Check Answers
 </button>
 {score !== null && (
-  <h3 style={{ marginTop: "15px" }}>
+  <div
+    style={{
+      marginTop: "20px",
+      padding: "15px",
+      borderRadius: "10px",
+      background: "#020617",
+      border: "1px solid #22c55e",
+      color: "#4ade80",
+      fontWeight: "600"
+    }}
+  >
     Score: {score} / {quiz.questions.length}
-  </h3>
+  </div>
 )}
-
           </div>
         )}
 

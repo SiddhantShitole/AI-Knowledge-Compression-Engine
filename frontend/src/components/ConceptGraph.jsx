@@ -8,8 +8,8 @@ const CardNode = ({ data }) => {
       style={{
         padding: "16px",
         borderRadius: "12px",
-        background: "#fff",
-        border: "1px solid #ddd",
+        background: "#111827",
+        border: "1px solid #334155",
         boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
         width: "200px",
         textAlign: "center",
