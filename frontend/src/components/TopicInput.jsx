@@ -30,7 +30,7 @@ function TopicInput({ setPath }) {
         alignItems: "center"
       }}
     >
-{/* LEFT SIDE GRAPH */}
+
       <input
         type="text"
         placeholder="Enter topic (e.g. Semiconductor)"
