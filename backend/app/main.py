@@ -1,14 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.ai_modules.llm_engine import extract_concepts, generate_lesson
-from app.ai_modules.llm_engine import generate_quiz
+from app.ai_modules.llm_engine import extract_concepts, generate_lesson, generate_quiz
+
 app = FastAPI()
 
-origins = ["*"]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
+    allow_origins=["*"],   # allow all for now
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
