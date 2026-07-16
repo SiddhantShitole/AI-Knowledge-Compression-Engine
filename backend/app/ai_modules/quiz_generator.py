@@ -3,7 +3,6 @@ def generate_quiz(concept: str):
     return {
         "questions": [
             {
-                "id": 1,
                 "question": f"What is the main purpose of {concept}?",
                 "options": [
                     "Understand the concept",
@@ -11,18 +10,17 @@ def generate_quiz(concept: str):
                     "Delete the concept",
                     "None of the above"
                 ],
-                "answer": "Understand the concept"
+                "correct": 0
             },
             {
-                "id": 2,
                 "question": f"Which statement about {concept} is correct?",
                 "options": [
-                    "It is an important concept",
-                    "It has no importance",
-                    "It is unrelated",
-                    "None"
+                    f"{concept} is an important topic",
+                    f"{concept} has no importance",
+                    f"{concept} is unrelated",
+                    "None of the above"
                 ],
-                "answer": "It is an important concept"
+                "correct": 0
             }
         ]
     }
